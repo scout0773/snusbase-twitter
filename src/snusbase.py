@@ -1,6 +1,6 @@
 import requests
 
-snusbase_auth = 'sb4w7czh864t1h5r8x598vxy9sy7f9'
+snusbase_auth = 'API_KEY'
 
 def check_twitter_breach(username):
     body = {
