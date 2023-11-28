@@ -22,6 +22,6 @@ Checks if a username is in the latest Twitter databreach and prints out the emai
    pip install -r requirements.txt 
    ```
 
-4. Input your Snusbase API Key
+4. Input your Snusbase API Key at the top of the python file
 
-4. Run [snusbase.py](https://github.com/8pz/snusbase-twitter/blob/main/src/snusbase.py)
+4. Run [snusbase.py](https://github.com/8pz/snusbase-twitter/blob/main/src/snusbase.py) and enter a username you want to search up
