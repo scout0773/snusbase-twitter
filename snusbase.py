@@ -12,6 +12,8 @@ def send_request(url, body=None):
     method = 'POST' if body else 'GET'
     data = json.dumps(body) if body else None
     response = requests.request(method, snusbase_api + url, headers=headers, data=data)
+    if response.status_code != 200:
+        raise Exception('request failed', response.status_code, response.reason)
     return response.json()
 
 def check_twitter_breach(username):
@@ -22,18 +24,14 @@ def check_twitter_breach(username):
         'wildcard': False,
     })
 
-    if search_response.get('results'):
-        for breach_name, breach_data in search_response['results'].items():
-            if breach_data:
-                result_entry = breach_data[0]
-                email = result_entry.get('email')
-                if email:
-                    print(f"The email associated with the username {username} in the Twitter 2023 breach is: {email}")
-                    return
+    if not search_response.get('results'):
+        return print(f"The username {username} was not found in the Twitter 2023 breach.")
 
-    print(f"The username {username} was not found in the Twitter 2023 breach.")
-
+    for breach_name, breach_data in ((name, data) for name, data in search_response.get('results', {}).items() if data):
+        email = breach_data[0].get('email')
+        if email:
+            print(f"{username}: {email}")
+    
 if __name__ == '__main__':
-    username_to_check = input("Enter the username to check: ")
-
-    check_twitter_breach(username_to_check)
+    while True:
+        check_twitter_breach(input("Enter the username to check: "))
